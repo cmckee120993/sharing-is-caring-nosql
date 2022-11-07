@@ -9,8 +9,7 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-// REQUESTS GO HERE
+app.use(routes);
 
 db.once('open'), () => {
     app.listen(PORT, () => {
