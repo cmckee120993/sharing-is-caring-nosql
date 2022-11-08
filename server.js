@@ -1,8 +1,9 @@
 const express = require('express');
 const { Db } = require('mongodb');
 const db = require('./config/connection');
+const routes = require('./routes');
 
-// const { NAME OF THING COMING FROM MODELS } = require('./models');
+const cwd = process.cwd();
 
 const PORT = process.env.PORT || 3001;
 const app = express();
