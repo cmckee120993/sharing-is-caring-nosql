@@ -5,13 +5,13 @@ const userSchema = new Schema(
         username: {
             type: String,
             required: true,
-            unique,
-            trimmed
+            unique: true,
+            trim: true
         },
         email: {
             type: String,
             required: true,
-            unique,
+            unique: true,
             validate: 
                 {
                     validator: function (v) {

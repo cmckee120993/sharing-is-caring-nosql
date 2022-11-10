@@ -114,7 +114,7 @@ const thoughtController = {
         });
     },
 
-    addReaction(req, res) {
+    removeReaction(req, res) {
         Thought.findOneAndUpdate(
             {_id: req.params.thoughtId},
             {$pull: {reactions: {reactionId: req.params.reactionId}}},
