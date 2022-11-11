@@ -56,12 +56,13 @@ const userController = {
                 _id: req.params.id
             })
             .then((userData) => {
+                console.log(userData);
             if(!userData) {
                 res.status(404).json({message: 'No user found with this id.'});
             }
            Thought.deleteMany({
             _id: {
-                $in: user.thoughts
+                $in: userData.thoughts
             }
            })
         })

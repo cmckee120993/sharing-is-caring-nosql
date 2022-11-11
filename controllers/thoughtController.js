@@ -1,11 +1,10 @@
 const { Thought, User } = require('../models');
-const { populate } = require("../models/user");
 
 const thoughtController = {
     getAllThoughts(req, res) {
-        Thought.find()
-            .then((thought) => {
-                res.json(thought);
+        Thought.find({})
+            .then((thoughtData) => {
+                res.json(thoughtData);
             })
             .catch(err => {
                 console.log(err);
@@ -16,7 +15,7 @@ const thoughtController = {
     getThoughtById(req, res) {
         Thought.findOne(
             {
-                _id: params.id
+                _id: req.params.thoughtId
             })
             .then((thoughtData) => {
                 if(!thoughtData) {
@@ -32,10 +31,11 @@ const thoughtController = {
     },
 
     addThought(req, res) {
+        console.log(req.body);
         Thought.create(req.body)
             .then((thoughtData) => {
                 return User.findOneAndUpdate(
-                    {_id: req.body.userID},
+                    {username: req.body.username},
                     {$push: { thoughts: thoughtData._id}},
                     {new: true}
                 )
@@ -51,7 +51,7 @@ const thoughtController = {
 
     updateThought(req, res) {
         Thought.findOneAndUpdate({
-            _id: req.params.id
+            _id: req.params.thoughtId
             },
             {
             $set: req.body
@@ -74,7 +74,7 @@ const thoughtController = {
     removeThought(req, res) {
         Thought.findOneAndDelete(
             {
-                _id: req.params.id
+                _id: req.params.thoughtId
             })
             .then((thoughtData) => {
                 if(!thoughtData){
@@ -82,7 +82,7 @@ const thoughtController = {
                 }
                 return User.findOneAndUpdate(
                     {_id: req.body.userId},
-                    {$pull: {thoughts:thought._id}},
+                    {$pull: {thoughts:thoughts._id}},
                     {new:true}
                 )
             })
